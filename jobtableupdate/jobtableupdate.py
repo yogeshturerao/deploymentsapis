@@ -7,6 +7,7 @@ from boto3.dynamodb.conditions import Key, Attr
 def lambda_handler(event, context):
     
     def CUSTOMER(): 
+	#this is customer function
         dynamodb= boto3.resource('dynamodb')
         table = dynamodb.Table('JobsCount')
         response = table.scan() 
