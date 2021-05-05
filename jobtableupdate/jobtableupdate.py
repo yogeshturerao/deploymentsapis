@@ -5,9 +5,8 @@ import uuid
 import boto3
 from boto3.dynamodb.conditions import Key, Attr 
 def lambda_handler(event, context):
-    
+
     def CUSTOMER(): 
-	#this is customer function
         dynamodb= boto3.resource('dynamodb')
         table = dynamodb.Table('JobsCount')
         response = table.scan() 
@@ -18,7 +17,6 @@ def lambda_handler(event, context):
                 versionnumber_all = i['VersionNumber']
             if i['Id'] == int(3):
                 versionnumber_pending = i['VersionNumber']
-                
         response = client.transact_write_items(
         TransactItems= [
             {
@@ -27,9 +25,8 @@ def lambda_handler(event, context):
                     'Item': {
                         'JobId': { 'N': str(jobid) },
                         'EntityType': { 'S': entitytype },
-                        'CustomerType': { 'S': customertype },
                         'Hosting': { 'S': hosting },
-                        'Initials': { 'S': initials },
+                        'Initial': { 'S': initials },
                         'CompanyCode': { 'S': companycode },
                         'InvoiceStartDate': { 'S': invoicedate },
                         'ApprovalStatus': { 'S': approvalstatus },
@@ -130,7 +127,6 @@ def lambda_handler(event, context):
             command = items['Command']
             deployment = items['Deployment']
             filename = filecommandalias[: filecommandalias.index('_')]
-        
             response = client.transact_write_items(
             TransactItems= [
                 {
@@ -173,9 +169,8 @@ def lambda_handler(event, context):
                     'Item': {
                         'JobId': { 'N': str(jobid) },
                         'EntityType': { 'S': entitytype },
-                        'CustomerType': { 'S': customertype },
                         'Hosting': { 'S': hosting },
-                        'Initials': { 'S': initials },
+                        'Initial': { 'S': initials },
                         'CompanyCode': { 'S': companycode },
                         'InvoiceStartDate': { 'S': invoicedate },
                         'ApprovalStatus': { 'S': approvalstatus },
@@ -261,10 +256,6 @@ def lambda_handler(event, context):
                 ]
                 )
 
-        
-        
-    
-    
     client = boto3.client('dynamodb')
     
     jobid = round(datetime.datetime.utcnow().timestamp() * 1000)
@@ -275,9 +266,8 @@ def lambda_handler(event, context):
     forminput = event['FormInput']
     customerdetails = forminput['CustomerDetails']
     entitytype = forminput['EntityType']
-    customertype = forminput['CustomerType']
     hosting = forminput['Hosting']
-    initials = forminput['Initials'] 
+    initials = forminput['Initial'] 
     companycode = forminput['CompanyCode']
     invoicedate = forminput['InvoiceStartDate']
     approvalstatus = forminput['ApprovalStatus']
@@ -321,8 +311,6 @@ def lambda_handler(event, context):
         DEVELOPER()
             
             
-        
-                
     return {
         'statusCode': 200,
         'body': { "JobId": jobid }
