@@ -5,6 +5,7 @@ import uuid
 import boto3
 from boto3.dynamodb.conditions import Key, Attr 
 def lambda_handler(event, context):
+    print(event)
 
     def CUSTOMER(): 
         dynamodb= boto3.resource('dynamodb')
@@ -268,15 +269,19 @@ def lambda_handler(event, context):
     entitytype = forminput['EntityType']
     hosting = forminput['Hosting']
     initials = forminput['Initial'] 
-    companycode = forminput['CompanyCode']
+    companycode = ""
     invoicedate = forminput['InvoiceStartDate']
-    approvalstatus = forminput['ApprovalStatus']
-    endtimestamp = forminput['EndTimestamp']
-    approvedby = forminput['ApprovedBy']
+    #approvalstatus = forminput['ApprovalStatus']
+    approvalstatus = 'Pending'
+    #endtimestamp = forminput['EndTimestamp']
+    endtimestamp = ""
+    #approvedby = forminput['ApprovedBy']
+    approvedby = ""
     createdby = forminput['CreatedBy']
-    trackingid = forminput['TrackingId']
+    #trackingid = forminput['TrackingId']
+    trackingid = ""
     cronlist = forminput['CronList']
-    print(cronlist)
+    #print(cronlist)
     
     firstname = customerdetails['FirstName']
     lastnme = customerdetails['LastName']
@@ -313,5 +318,8 @@ def lambda_handler(event, context):
             
     return {
         'statusCode': 200,
-        'body': { "JobId": jobid }
+        'body': { 
+            "JobId": jobid,
+            "ApprovalStatus": approvalstatus
+        }
     }
