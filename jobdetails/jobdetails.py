@@ -41,7 +41,7 @@ def lambda_handler(event, context):
                 starttimestamp= i['StartTimeStamp']
                 starttimestamp= starttimestamp['N']
                 endtimestamp= i['EndTimeStamp']
-                endtimestamp=endtimestamp['S']
+                endtimestamp=endtimestamp['N']
                 tempvar2= {"starttimestamp": starttimestamp, "endtimestamp": endtimestamp, "stagename": stagename, "task": task, "runstatus": runstatus }
                 var2.append(tempvar2)
     
